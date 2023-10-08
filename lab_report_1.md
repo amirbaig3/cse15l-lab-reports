@@ -20,7 +20,7 @@ Running the command `cd lecture1` will change the working directory to `lecture1
 ```
 We can see the the working directory has changed on the second line. This is the expected output.
 
-3. Running the command with a file
+3. Running the command with a file  
 Running the command `cd lecture1/Hello.java` results in an error.
 ```
 [user@sahara ~]$ cd lecture1/Hello.java
@@ -30,7 +30,7 @@ This is an error because the command line explicitly tells us that the argument 
 
 ## The `ls` command
 
-1. Running the command with no argument
+1. Running the command with no argument  
 Running `ls` will print the files within the current folder.
 ```
 [user@sahara ~]$ ls
@@ -38,7 +38,7 @@ lecture1
 ```
 Since the only folder within the working directory is `lecture1`, that is the only item that is printed.
 
-2. Running the command with a directory
+2. Running the command with a directory  
 Running `ls lecture1` prints the contents of the `lecture1` folder.
 ```
 [user@sahara ~]$ ls lecture1/
@@ -46,7 +46,7 @@ Hello.class  Hello.java  messages  README
 ```
 The `ls` command prints the contents of a directory. Therefore, passing a path to a folder in the command will print the contents of the given folder. 
 
-3. Running the command with a file
+3. Running the command with a file  
 Running `ls lecture1/Hello.java` simply prints the given path.
 ```
 [user@sahara ~]$ ls lecture1/Hello.java
@@ -56,7 +56,7 @@ lecture1/Hello.java
 
 ## The `cat` command
 
-1. Running the command with no arguments
+1. Running the command with no arguments  
 Running `cat` results in the command line being stuck in a loop. The command will run infinitely where any argument passed is repeated, and the command only ends when forfcefully terminated.
 ```
 [user@sahara ~]$ cat
@@ -69,7 +69,7 @@ lecture/Hello.java
 ```
 This could be considered an error since 1. it does not terminate naturally and 2. any file path passed will print the contents of the file, which is unexpected.
 
-2. Running the command with a directory
+2. Running the command with a directory  
 Running `cat lecture1` results in an error.
 ```
 [user@sahara ~]$ cat lecture1/
@@ -77,7 +77,7 @@ cat: lecture1/: Is a directory
 ```
 The `cat` command is unable to print the "contents" of a folder because the folder itself does not have any text. It may contain text documents, but the folder itself has no text, and therefore reuslts in an error.
 
-3. Running the command with a file
+3. Running the command with a file  
 Running `cat lecture1/messages/en-us.txt` prints the contents of the `en-us.txt` file.
 ```
 [user@sahara ~]$ cat lecture1/messages/en-us.txt

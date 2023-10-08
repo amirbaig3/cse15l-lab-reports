@@ -57,12 +57,17 @@ lecture1/Hello.java
 ## The `cat` command
 
 1. Running the command with no arguments
-Running `cat` results in the command line hanging, that is, the command is running but with no output and is not terminating
+Running `cat` results in the command line being stuck in a loop. The command will run infinitely where any argument passed is repeated, and the command only ends when forfcefully terminated.
 ```
-[user@sahara ~/lecture1]$ cat
+[user@sahara ~]$ cat
+test
+test
+lecture/Hello.java
+lecture/Hello.java
 ^C
+[user@sahara ~]$
 ```
-*Note, the `^C` is me forcefully terminating the command*. This could be considered an error, specifically a runtime error, because the command is not able to properly handle no arguments. `cat` should print the contents of a file, but since no file is passed, it does not know what to print.
+This could be considered an error since 1. it does not terminate naturally and 2. any file path passed will print the contents of the file, which is unexpected.
 
 2. Running the command with a directory
 Running `cat lecture1` results in an error.

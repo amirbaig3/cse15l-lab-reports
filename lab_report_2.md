@@ -53,12 +53,12 @@ class StringServer {
 ### /add-message Usage:
 ![1](images/lab-2/StringServer-1.png)
 - The methods that are called are `handleRequest` and `buildString`.
-- `handleRequest` takes in the inputted url, which in the image is `localhost:8100/add-message?s=Hello`. `buildString` takes in the string argument contained within the url. Before the request is processed, `str` is "" and `len` is 0. After, they become "1. Hello\n" and 1, respectively.
+- `handleRequest` takes in `URI url`, which in the image is `localhost:8100/add-message?s=Hello`. `buildString` takes in `String inputStrng`, which is argument contained within the url. Before the request is processed, `str` is "" and `len` is 0. After, they become "1. Hello\n" and 1, respectively.
 - By the end of `buildString`, the variables `str` and `len` will now include the new string and update the length, respectively.
 
 ![2](images/lab-2/StringServer-2.png)
 - Similar to the previous image, `handleRequest` and `buildString` are called.
-- The URL passed into `handleRequest` is `localhost:8100/add-message?s=How are you`. The string passed into `buildString` is "How are you". `str` becomes "1. Hello\n2. How are you\n" and `len` becomes 2.
+- The `URI url` passed into `handleRequest` is `localhost:8100/add-message?s=How are you`. The `String inputString` passed into `buildString` is "How are you". `str` becomes "1. Hello\n2. How are you\n" and `len` becomes 2.
 - `str` appends the string from the url and `len` gets incremented to count the new string.
 
 ## Part 2

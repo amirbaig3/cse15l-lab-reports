@@ -3,121 +3,119 @@
 ## Part 1 - Debugging Scenario  
 I could not think of a scenario (it's harder than it sounds) so I decided to reference a bug I had to fix myself.   
 
-1. In my grading script, all student submissions fail to compile, even the ones with no errors. My guess is some sort of typo since I am properly including the junit package.  
-The error: 
+(1) In my grading script, all student submissions fail to compile, even the ones with no errors. My guess is some sort of typo since I am properly including the junit package.  
+The error:   
 ```
-TestListExamples.java:1: error: package org.junit does not exist
-import static org.junit.Assert.*;
-                       ^
-TestListExamples.java:2: error: package org.junit does not exist
-import org.junit.*;
-^
-TestListExamples.java:13: error: cannot find symbol
-  @Test(timeout = 500)
-   ^
-  symbol:   class Test
-  location: class TestListExamples
-TestListExamples.java:22: error: cannot find symbol
-  @Test(timeout = 500)
-   ^
-  symbol:   class Test
-  location: class TestListExamples
-TestListExamples.java:31: error: cannot find symbol
-  @Test(timeout = 500)
-   ^
-  symbol:   class Test
-  location: class TestListExamples
-TestListExamples.java:40: error: cannot find symbol
-  @Test(timeout = 500)
-   ^
-  symbol:   class Test
-  location: class TestListExamples
-TestListExamples.java:49: error: cannot find symbol
-  @Test
-   ^
-  symbol:   class Test
-  location: class TestListExamples
-TestListExamples.java:19: error: cannot find symbol
-    assertEquals(expected, merged);
-    ^
-  symbol:   method assertEquals(List<String>,List<String>)
-  location: class TestListExamples
-TestListExamples.java:28: error: cannot find symbol
-    assertEquals(expected, merged);
-    ^
-  symbol:   method assertEquals(List<String>,List<String>)
-  location: class TestListExamples
-TestListExamples.java:37: error: cannot find symbol
-    assertEquals(expected, merged);
-    ^
-  symbol:   method assertEquals(List<String>,List<String>)
-  location: class TestListExamples
-TestListExamples.java:46: error: cannot find symbol
-    assertEquals(expected, merged);
-    ^
-  symbol:   method assertEquals(List<String>,List<String>)
-  location: class TestListExamples
-TestListExamples.java:55: error: cannot find symbol
-    assertEquals(expected, filtered);
-    ^
-  symbol:   method assertEquals(List<String>,List<String>)
-  location: class TestListExamples
-12 errors
+TestListExamples.java:1: error: package org.junit does not exist  
+import static org.junit.Assert.*;  
+                       ^  
+TestListExamples.java:2: error: package org.junit does not exist  
+import org.junit.*;  
+^  
+TestListExamples.java:13: error: cannot find symbol  
+  @Test(timeout = 500)  
+   ^  
+  symbol:   class Test  
+  location: class TestListExamples  
+TestListExamples.java:22: error: cannot find symbol  
+  @Test(timeout = 500)  
+   ^  
+  symbol:   class Test  
+  location: class TestListExamples  
+TestListExamples.java:31: error: cannot find symbol  
+  @Test(timeout = 500)  
+   ^  
+  symbol:   class Test  
+  location: class TestListExamples  
+TestListExamples.java:40: error: cannot find symbol  
+  @Test(timeout = 500)  
+   ^  
+  symbol:   class Test  
+  location: class TestListExamples  
+TestListExamples.java:49: error: cannot find symbol  
+  @Test  
+   ^  
+  symbol:   class Test  
+  location: class TestListExamples  
+TestListExamples.java:19: error: cannot find symbol  
+    assertEquals(expected, merged);  
+    ^  
+  symbol:   method assertEquals(List<String>,List<String>)  
+  location: class TestListExamples  
+TestListExamples.java:28: error: cannot find symbol  
+    assertEquals(expected, merged);  
+    ^  
+  symbol:   method assertEquals(List<String>,List<String>)  
+  location: class TestListExamples  
+TestListExamples.java:37: error: cannot find symbol  
+    assertEquals(expected, merged);  
+    ^  
+  symbol:   method assertEquals(List<String>,List<String>)  
+  location: class TestListExamples  
+TestListExamples.java:46: error: cannot find symbol  
+    assertEquals(expected, merged);  
+    ^  
+  symbol:   method assertEquals(List<String>,List<String>)  
+  location: class TestListExamples  
+TestListExamples.java:55: error: cannot find symbol  
+    assertEquals(expected, filtered);  
+    ^  
+  symbol:   method assertEquals(List<String>,List<String>)  
+  location: class TestListExamples  
+12 errors  
 ```
 
-grade.sh:
+grade.sh:  
 ```
-rm -rf student-submission
-rm -rf grading-area
+rm -rf student-submission  
+rm -rf grading-area  
 
-mkdir grading-area
+mkdir grading-area  
 
-git clone $1 student-submission &> /dev/null
-if [[ $? != 0 ]]
-then
-    echo 'Failed to clone repository!'
-    exit 1
-fi
-echo 'Finished cloning'
+git clone $1 student-submission &> /dev/null  
+if [[ $? != 0 ]]  
+then  
+    echo 'Failed to clone repository!'  
+    exit 1  
+fi  
+echo 'Finished cloning'  
 
-if [[ ! -f ./student-submission/ListExamples.java ]]
-then
-    echo 'Expected "ListExamples.java" at root of repository, but was not found!'
-    exit 1
-fi
+if [[ ! -f ./student-submission/ListExamples.java ]]  
+then  
+    echo 'Expected "ListExamples.java" at root of repository, but was not found!'  
+    exit 1  
+fi  
 
-cp -r lib/ student-submission/ListExamples.java TestListExamples.java grading-area
+cp -r lib/ student-submission/ListExamples.java TestListExamples.java grading-area    
 
-cd grading-area
-CPATH='.;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar'
-echo "javac -cp $CPATH *.java &> output.txt"
-javac -cp $CPATH *.java &> output.txt
+cd grading-area  
+CPATH='.;lib/hamcrest-core-1.3.jar;lib/junit-4.13.2.jar'  
+javac -cp $CPATH *.java &> output.txt  
 
+if [[ $? != 0 ]]  
+then  
+    echo 'Failed to compile files!'  
+    exit 1  
+fi  
 
-if [[ $? != 0 ]]
-then
-    echo 'Failed to compile files!'
-    exit 1
-fi
+java -cp $CPATH org.junit.runner.JUnitCore TestListExamples > test_output.txt  
 
-java -cp $CPATH org.junit.runner.JUnitCore TestListExamples > test_output.txt
-
-grep -i "tests" test_output.txt
+grep -i "tests" test_output.txt  
 
 ```
 
-TestListExamples.java:
+TestListExamples.java:  
 ```
-import static org.junit.Assert.*;
-import org.junit.*;
-import java.util.Arrays;
-import java.util.List;
+import static org.junit.Assert.*;  
+import org.junit.*;  
+import java.util.Arrays;  
+import java.util.List;  
 
-class IsMoon implements StringChecker {
-  public boolean checkString(String s) {
-    return s.equalsIgnoreCase("moon");
-  }
-}
+class IsMoon implements StringChecker {  
+  public boolean checkString(String s) {  
+    return s.equalsIgnoreCase("moon");  
+  }   
+}  
 
 public class TestListExamples {
   @Test(timeout = 500)
@@ -167,12 +165,12 @@ public class TestListExamples {
 }
 ```
 
-2. The bug here is fairly strightforward, so here are some things to consider: since it's a compile error, try printing out the `javac` command with its arguments. Also, consider your environment and recall the differences between Windows and Linux.
+(2) The bug here is fairly strightforward, so here are some things to consider: since it's a compile error, try printing out the `javac` command with its arguments. Also, consider your environment and recall the differences between Windows and Linux.
 
-3. Following your advice, here is what I got: ![img](images/lab-5/img.png)  
+(3) Following your advice, here is what I got: ![img](images/lab-5/img.png)  
 It seems I forgot to change the semicolons from my Windows machine to colons for the Linux ieng6 server. Making the edits, the programs runs as expected.  
 
-4. File structure: ![dir](images/lab-5/dir.png)  
+(4) File structure: ![dir](images/lab-5/dir.png)  
 All other information included in other posts.
 
 ## Part 2 - Reflection
